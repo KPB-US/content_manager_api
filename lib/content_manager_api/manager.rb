@@ -77,6 +77,10 @@ class Manager
     end
 
     response = http.request(request)
-    JSON.parse(response.read_body)
+    if response.is_a?(Net::HTTPNoContent)
+      {}
+    else
+      JSON.parse(response.read_body)
+    end
   end
 end

@@ -54,38 +54,50 @@ RSpec.describe Record do
     end
 
     it 'a KPB Box record' do
-      result = create_box
+      box_uri = create_box['Uri']
 
-      expect(result['Uri']).to_not be_nil
+      expect(box_uri).to_not be_nil
+
+      cm.record.delete box_uri
     end
 
     it 'a KPB File record' do
-      container_uri = create_box['Uri']
-      result = create_file(container_uri, 'CLK.ELE.33')
+      box_uri = create_box['Uri']
+      file_uri = create_file(box_uri, 'CLK.ELE.33')['Uri']
 
-      expect(result['Uri']).to_not be_nil
+      expect(file_uri).to_not be_nil
+
+      cm.record.delete file_uri
+      cm.record.delete box_uri
     end
 
     it 'reports when classification is unknown' do
-      container_uri = create_box['Uri']
+      box_uri = create_box['Uri']
 
       expect do
-        create_file(container_uri, 'CLK.ELE.33X')
+        create_file(box_uri, 'CLK.ELE.33X')
       end.to raise_error('Error with field named: Classification. Unable to find object CLK.ELE.33X')
+
+      cm.record.delete box_uri
     end
 
     it 'a KPB Document record' do
-      container_uri = create_box['Uri']
-      container_uri = create_file(container_uri, 'CLK.ELE.33')['Uri']
+      box_uri = create_box['Uri']
+      file_uri = create_file(box_uri, 'CLK.ELE.33')['Uri']
       result = cm.record.create_kpb_document(
         title: 'another test document',
-        container: container_uri,
+        container: file_uri,
         file_content: 'This is a test file and therefore there is nothing in it.',
         file_name: 'another_test_file.txt'
       )
       first_result = result['Results'].first
+      document_uri = first_result['Uri']
 
-      expect(first_result['Uri']).to_not be_nil
+      expect(document_uri).to_not be_nil
+
+      cm.record.delete document_uri
+      cm.record.delete file_uri
+      cm.record.delete box_uri
     end
   end
 

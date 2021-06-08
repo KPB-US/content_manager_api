@@ -53,6 +53,13 @@ class Record < Manager
     create_record(payload)
   end
 
+  def delete(uri)
+    payload = {
+      DeleteRecordDeleteContents: true
+    }
+    delete_record uri, payload
+  end
+
   private
 
   # returns:
@@ -98,5 +105,10 @@ class Record < Manager
     end
 
     response
+  end
+
+  def delete_record(uri, payload)
+    url = @server + "/Record/#{uri}/Delete"
+    post_request(url, payload)
   end
 end
