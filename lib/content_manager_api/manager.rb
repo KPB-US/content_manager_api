@@ -5,6 +5,8 @@ class Manager
   require 'json'
 
   def initialize(api_uri:, user:, password:, domain:)
+    raise ArgumentError.new('password is required (CM_API_PASSWORD env var mising?)') if password.nil? || password == ''
+
     @server = api_uri # Rails.application.credentials.content_manager[:api_url] # 'http://admwebdoc1.borough.kenai.ak.us/CMServiceAPI'
     @user = user # Rails.application.credentials.content_manager[:user]
     @password = password # Rails.application.credentials.content_manager[:password]
