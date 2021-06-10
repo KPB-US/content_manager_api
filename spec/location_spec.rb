@@ -7,6 +7,6 @@ RSpec.describe Location do
 
     expect(locations.count).to be > 100 # we know we have more than this default page size
     expect(first_result['TrimType']).to eq('Location')
-    expect(first_result['Uri']).to_not be_nil
+    expect(first_result).to include('Uri' => a_kind_of(Integer))
   end
 end

@@ -7,7 +7,7 @@ RSpec.describe Classification do
 
     expect(classifications.count).to be > 250 # we know we have more than this default page size
     expect(first_result['TrimType']).to eq('Classification')
-    expect(first_result['Uri']).to_not be_nil
+    expect(first_result).to include('Uri' => a_kind_of(Integer))
   end
 
   it "can list codes" do

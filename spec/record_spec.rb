@@ -7,21 +7,23 @@ RSpec.describe Record do
 
     expect(records.count).to eq(250) # current pageSize (arbitrary)
     expect(first_result['TrimType']).to eq('Record')
-    expect(first_result['Uri']).to_not be_nil
+    expect(first_result).to include('Uri' => a_kind_of(Integer))
   end
 
   it 'can find by uri' do
-    records = cm.record.find '4404'
+    looking_for = '4404'
+    records = cm.record.find looking_for
     first_result = records.first
 
-    expect(first_result['Uri']).to eq(4404)
+    expect(first_result['Uri']).to eq(looking_for.to_i)
   end
 
   it 'can find by name' do
-    records = cm.record.find 'B10215'
+    looking_for = 'B10215'
+    records = cm.record.find looking_for
     first_result = records.first
 
-    expect(first_result['RecordLatestVersion']['NameString']).to eq('B10215')
+    expect(first_result['RecordLatestVersion']['NameString']).to eq(looking_for)
   end
 
   it 'reports when cannot find a record' do
@@ -56,7 +58,7 @@ RSpec.describe Record do
     it 'a KPB Box record' do
       box_uri = create_box['Uri']
 
-      expect(box_uri).to_not be_nil
+      expect(box_uri).to a_kind_of(Integer)
 
       cm.record.delete box_uri
     end
@@ -65,7 +67,7 @@ RSpec.describe Record do
       box_uri = create_box['Uri']
       file_uri = create_file(box_uri, 'CLK.ELE.33')['Uri']
 
-      expect(file_uri).to_not be_nil
+      expect(file_uri).to a_kind_of(Integer)
 
       cm.record.delete file_uri
       cm.record.delete box_uri
@@ -93,7 +95,7 @@ RSpec.describe Record do
       first_result = result['Results'].first
       document_uri = first_result['Uri']
 
-      expect(document_uri).to_not be_nil
+      expect(document_uri).to a_kind_of(Integer)
 
       cm.record.delete document_uri
       cm.record.delete file_uri
