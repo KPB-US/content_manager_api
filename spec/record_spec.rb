@@ -42,14 +42,15 @@ RSpec.describe Record do
 
   context 'create' do
     def create_box
-      result = cm.record.create_kpb_box(title: 'another test box')
+      result = cm.record.create(record_type: 'KPB Box', title: 'another test box')
       result['Results'].first
     end
 
     def create_file(container_uri, classification)
-      result = cm.record.create_kpb_file(
-        title: 'another test file', 
-        container: container_uri, 
+      result = cm.record.create(
+        record_type: 'KPB File',
+        title: 'another test file',
+        container: container_uri,
         classification: classification
       )
       result['Results'].first
@@ -86,7 +87,8 @@ RSpec.describe Record do
     it 'a KPB Document record' do
       box_uri = create_box['Uri']
       file_uri = create_file(box_uri, 'CLK.ELE.33')['Uri']
-      result = cm.record.create_kpb_document(
+      result = cm.record.create(
+        record_type: 'KPB Document', 
         title: 'another test document',
         container: file_uri,
         file_content: 'This is a test file and therefore there is nothing in it.',
