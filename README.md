@@ -22,8 +22,32 @@ Or install it yourself as:
 
 ## Usage
 
-to be filled out later
+```ruby
+  require 'content_manager_api'
 
+  api_uri = 'http://servername/CMServiceAPI'
+  api_user = 'username'
+  api_password = ENV['CM_API_PASSWORD']
+  api_domain = 'domain'
+  @manager = Manager.new(api_uri: api_uri, user: api_user, password: api_password, domain: api_domain)    
+
+  result = @manager.record.create(
+    record_type: 'Finance Document - Payroll',
+    title: 'Timesheet for Johnny Quest',
+    file_content: 'contents_of_the_file',
+    file_name: 'name_of_the_file.pdf',
+    fields: { 
+      'EmployeeNo' => '54321',
+      'CostCenter' => 'HR',
+      'PeriodEnding' => Date.today.iso8601
+    }
+  )
+  first_result = result['Results'].first
+  document_uri = first_result['Uri']
+  
+  puts document_uri
+
+```
 
 ## Development
 
