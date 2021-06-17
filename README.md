@@ -3,11 +3,14 @@
 A ruby gem for interfacing with Micro Focus Content Manager.
 ## Installation
 
-Add this line to your application's Gemfile:
+Add these lines to your application's Gemfile:
 
 ```ruby
-gem 'content_manager_api'
+gem 'ruby-ntlm', github: 'KPB-US/ruby-ntlm'
+gem 'content_manager_api', git: 'git@github.com:KPB-US/content_manager_api'
 ```
+
+This ruby-ntlm fork has been tweaked to fix a posting bug.  The content_manager_api gem is a private repo.
 
 And then execute:
 

@@ -84,7 +84,7 @@ RSpec.describe Record do
       cm.record.delete box_uri
     end
 
-    it 'a KPB Document record' do
+    it 'a KPB Document record with a file' do
       box_uri = create_box['Uri']
       file_uri = create_file(box_uri, 'CLK.ELE.33')['Uri']
       result = cm.record.create(
@@ -103,6 +103,39 @@ RSpec.describe Record do
       cm.record.delete file_uri
       cm.record.delete box_uri
     end
+
+    it 'a KPB Document record without a file' do
+      result = cm.record.create(
+        record_type: 'KPB Document', 
+        title: 'another test document'
+      )
+      first_result = result['Results'].first
+      document_uri = first_result['Uri']
+
+      expect(document_uri).to a_kind_of(Integer)
+
+      cm.record.delete document_uri
+    end
+
+    it 'a KPB Document record with fields' do
+
+      result = cm.record.create(
+        record_type: 'KPB Document', 
+        title: 'another test document',
+        fields: { 
+          'Subject' => 'This is the subject'
+        }
+      )
+      first_result = result['Results'].first
+      document_uri = first_result['Uri']
+      fields = first_result['Fields']
+
+      expect(document_uri).to a_kind_of(Integer)
+      expect(fields['Subject']).to a_hash_including('Value' => 'This is the subject')
+
+      cm.record.delete document_uri
+    end
+
   end
 
   it 'can update a document'
