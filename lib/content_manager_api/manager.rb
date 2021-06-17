@@ -67,7 +67,8 @@ class Manager
 
     if payload.keys.include?('Files')
       files = payload.delete 'Files'
-      form_data = JSON.parse(payload.to_json).to_a
+      fields = payload.delete('Fields') || {}
+      form_data = JSON.parse(payload.to_json).to_a + fields.map { |k,v| [k, v['Value']] }
       form_data.push [ 'Files', *files ]
 
       request.set_form form_data, 'multipart/form-data'
