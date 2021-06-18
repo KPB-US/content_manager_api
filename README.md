@@ -25,7 +25,7 @@ Or install it yourself as:
 ```ruby
   require 'content_manager_api'
 
-  api_uri = 'http://servername/CMServiceAPI'
+  api_uri = 'http://servername/CMServiceAPI_CT'
   api_user = 'username'
   api_password = ENV['CM_API_PASSWORD']
   api_domain = 'domain'

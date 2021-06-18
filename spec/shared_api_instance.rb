@@ -7,7 +7,7 @@ end
 RSpec.shared_context "shared api instance", shared_context: :metadata do
   # content_manager
   let(:cm) do
-    api_uri = 'http://admwebdoc1.borough.kenai.ak.us/CMServiceAPI'
+    api_uri = 'http://admwebdoc1.borough.kenai.ak.us/CMServiceAPI_CT'
     api_user = 'svc_cmgr_workgroup'
     api_password = ENV['CM_API_PASSWORD']
     api_domain = 'KPB'
