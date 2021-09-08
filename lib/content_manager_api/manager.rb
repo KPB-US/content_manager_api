@@ -17,6 +17,10 @@ class Manager
     @classification ||= Classification.new(api_uri: @server, user: @user, password: @password, domain: @domain)
   end
 
+  def field
+    @field ||= Field.new(api_uri: @server, user: @user, password: @password, domain: @domain)
+  end
+
   def location
     @location ||= Location.new(api_uri: @server, user: @user, password: @password, domain: @domain)
   end
@@ -45,11 +49,11 @@ class Manager
     results
   end
 
-  def get_all_items(url, q: nil, all: true)
+  def get_all_items(url, q: nil, all: true, properties: nil)
     items = []
     loop do
       # pageSize is abitrary
-      results = get_response(url + "?q=#{q || 'all'}&ExcludeCount=true&propertySets=Details&pageSize=250&start=#{items.count + 1}")
+      results = get_response(url + "?q=#{q || 'all'}&ExcludeCount=true&#{properties || 'propertySets=Details'}&pageSize=250&start=#{items.count + 1}")
       items += results['Results']
       break if !results['HasMoreItems'] || !all
     end 

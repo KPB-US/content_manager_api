@@ -1,3 +1,5 @@
 module ContentManagerApi
-  VERSION = "0.1.0"
+  VERSION = "0.1.1"
 end
+
+# 0.1.1 - added support for field definitions
