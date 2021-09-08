@@ -29,6 +29,10 @@ class Manager
     @record ||= Record.new(api_uri: @server, user: @user, password: @password, domain: @domain)
   end
 
+  def record_type
+    @record_type ||= RecordType.new(api_uri: @server, user: @user, password: @password, domain: @domain)
+  end
+
   protected
 
   def get_response(url)
